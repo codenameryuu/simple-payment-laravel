@@ -28,12 +28,12 @@ class PaymentApiValidation
     }
 
     /**
-     ** Detail transaction validation.
+     ** History transaction validation.
      *
      * @param $request
      * @return ArrayObject
      */
-    public function detailTransaction($request)
+    public function historyTransaction($request)
     {
         $status = true;
         $message = MessageHelper::validationSuccess();

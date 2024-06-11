@@ -5,7 +5,6 @@ return [
     App\Providers\AppServiceProvider::class,
     App\Providers\AuthServiceProvider::class,
     App\Providers\RouteServiceProvider::class,
-    App\Providers\HorizonServiceProvider::class,
     App\Providers\ViewServiceProvider::class,
 
     // * Helper Service Providers

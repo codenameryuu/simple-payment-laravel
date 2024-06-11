@@ -59,12 +59,12 @@ class PaymentApiService
     }
 
     /**
-     ** Detail transaction service.
+     ** History transaction service.
      *
      * @param $request
      * @return ArrayObject
      */
-    public function detailTransaction($request)
+    public function historyTransaction($request)
     {
         $status = true;
         $message = MessageHelper::retrievedSuccess();

@@ -7,15 +7,15 @@ use App\Http\Controllers\Api\PaymentApiController;
 Route::group(
     [
         'as' => 'payment.',
-        'middleware' => [],
+        'middleware' => ['throttle:payment'],
         'prefix' => 'payment',
     ],
     function () {
         Route::get('transaction/summary', [PaymentApiController::class, 'summaryTransaction'])
             ->name('summaryTransaction');
 
-        Route::get('transaction/detail/{user_id}', [PaymentApiController::class, 'detailTransaction'])
-            ->name('detailTransaction');
+        Route::get('transaction/history/{user_id}', [PaymentApiController::class, 'historyTransaction'])
+            ->name('historyTransaction');
 
         Route::post('transaction/create', [PaymentApiController::class, 'createTransaction'])
             ->name('createTransaction');

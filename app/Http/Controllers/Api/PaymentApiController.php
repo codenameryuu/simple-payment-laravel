@@ -56,21 +56,21 @@ class PaymentApiController extends Controller
     }
 
     /**
-     ** Detail transaction.
+     ** History transaction.
      *
      * @param \App\Http\Requests\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function detailTransaction(Request $request)
+    public function historyTransaction(Request $request)
     {
         $request['user_id'] = $request->user_id;
-        $validation = $this->paymentApiValidation->detailTransaction($request);
+        $validation = $this->paymentApiValidation->historyTransaction($request);
 
         if (!$validation->status) {
             return $this->formatResponse($validation);
         }
 
-        $result = $this->paymentApiService->detailTransaction($request);
+        $result = $this->paymentApiService->historyTransaction($request);
 
         return $this->formatResponse($result);
     }

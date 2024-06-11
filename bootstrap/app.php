@@ -37,7 +37,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->api(prepend: [
-            \Illuminate\Routing\Middleware\ThrottleRequests::class,
+            // \Illuminate\Routing\Middleware\ThrottleRequests::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ]);
 
@@ -99,11 +99,12 @@ return Application::configure(basePath: dirname(__DIR__))
                         'error_field' => $field,
                     ];
 
-                    return response()->json($response, $e->status);
+                    return response()->json($response, 422);
                 }
 
                 if ($e instanceof ThrottleRequestsException) {
-                    $message = $e->getMessage();
+                    $retry = $e->getHeaders()['Retry-After'];
+                    $message = 'Terlalu sering mengakses halaman ini, silahkan coba lagi setelah ' . $retry . ' detik !';
 
                     $response = [
                         'status' => false,
@@ -111,30 +112,6 @@ return Application::configure(basePath: dirname(__DIR__))
                     ];
 
                     return response()->json($response, 429);
-                }
-
-                if ($e instanceof HttpExceptionInterface) {
-                    $response = [
-                        'status' => false,
-                        'message' => $e->getMessage(),
-                    ];
-
-                    if (config('app.debug')) {
-                        $debug = [
-                            'exception' => get_class($e),
-                            'file' => $e->getFile(),
-                            'trace' => $e->getTrace(),
-                        ];
-
-                        $response = array_merge($response, $debug);
-                    }
-
-                    if ($e->getStatusCode() === 429) {
-                        $retry = $e->getHeaders()['Retry-After'];
-                        $response['message'] = 'Try again in ' . $retry . ' seconds';
-                    }
-
-                    return response()->json($response, $e->getStatusCode());
                 }
             }
         });
