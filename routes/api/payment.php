@@ -7,7 +7,7 @@ use App\Http\Controllers\Api\PaymentApiController;
 Route::group(
     [
         'as' => 'payment.',
-        'middleware' => ['throttle:payment'],
+        'middleware' => ['throttle:payment', 'auth:api'],
         'prefix' => 'payment',
     ],
     function () {

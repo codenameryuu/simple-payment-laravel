@@ -21,6 +21,7 @@ class AuthApiValidation
             'email' => ['required', 'unique:users,email'],
             'password' => ['required', 'confirmed'],
             'password_confirmation' => ['required'],
+            'name' => ['required'],
         ];
 
         $errorMessage = [
@@ -31,6 +32,8 @@ class AuthApiValidation
             'password.confirmed' => 'Password tidak sama dengan konfirmasi password !',
 
             'password_confirmation.required' => 'Konfirmasi password tidak boleh kosong !',
+
+            'name.required' => 'Nama tidak boleh kosong !',
         ];
 
         $request->validate($validate, $errorMessage);

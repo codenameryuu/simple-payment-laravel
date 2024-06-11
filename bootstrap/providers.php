@@ -23,6 +23,5 @@ return [
     EloquentFilter\ServiceProvider::class,
     Maatwebsite\Excel\ExcelServiceProvider::class,
     Spatie\Permission\PermissionServiceProvider::class,
-    Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
     Yajra\DataTables\DataTablesServiceProvider::class,
 ];

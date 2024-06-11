@@ -2,8 +2,9 @@
 
 namespace App\Services\Api;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 use App\Helpers\MessageHelper;
 
@@ -25,14 +26,14 @@ class AuthApiService
         $data = [
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'name' => $request->name,
         ];
 
         $user = User::create($data);
 
         $data = User::firstWhere('id', $user->id);
-
-        $credentials = request(['email', 'password']);
-        $token = auth()->guard('api')->attempt($credentials);
+        $passportToken = $data->createToken('passportToken')->accessToken;
+        $token = $passportToken->token;
 
         $result = (object) [
             'status' => $status,
@@ -57,8 +58,7 @@ class AuthApiService
 
         $data = User::firstWhere('email', $request->email);
 
-        $credentials = request(['email', 'password']);
-        $token = auth()->guard('api')->attempt($credentials);
+        $token = $data->createToken('passportToken')->accessToken;
 
         $result = (object) [
             'status' => $status,
@@ -81,7 +81,15 @@ class AuthApiService
         $status = true;
         $message = MessageHelper::logoutSuccess();
 
-        $removeToken = JWTAuth::invalidate(JWTAuth::getToken());
+        $accessToken = Auth::user()->token();
+
+        DB::table('oauth_refresh_tokens')
+            ->where('access_token_id', $accessToken->id)
+            ->update([
+                'revoked' => true
+            ]);
+
+        $accessToken->revoke();
 
         $result = (object) [
             'status' => $status,
