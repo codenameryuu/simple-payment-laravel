@@ -13,7 +13,7 @@ class ConstantHelper
     {
         $result = [
             'Pending',
-            'Success',
+            'Completed',
             'Failed'
         ];
 

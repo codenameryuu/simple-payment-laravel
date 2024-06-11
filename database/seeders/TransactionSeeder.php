@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Faker\Factory;
 
+use App\Helpers\ConstantHelper;
+
 use App\Models\Transaction;
 use App\Models\User;
 
@@ -23,6 +25,7 @@ class TransactionSeeder extends Seeder
             $data = [
                 'user_id' => $faker->randomElement($user),
                 'amount' => $faker->randomNumber(5, true),
+                'status' => $faker->randomElement(ConstantHelper::transactionStatus()),
             ];
 
             Transaction::create($data);

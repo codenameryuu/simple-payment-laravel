@@ -12,5 +12,4 @@
 */
 
 require __DIR__ . '/api/auth.php';
-require __DIR__ . '/api/product-category.php';
-require __DIR__ . '/api/product.php';
+require __DIR__ . '/api/payment.php';
