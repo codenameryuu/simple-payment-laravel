@@ -4,7 +4,7 @@ namespace App\ModelFilters;
 
 use EloquentFilter\ModelFilter;
 
-class ProductFilter extends ModelFilter
+class TransactionFilter extends ModelFilter
 {
     /**
      * Related Models that have ModelFilters as well as the method on the ModelFilter
@@ -13,15 +13,4 @@ class ProductFilter extends ModelFilter
      * @var array
      */
     public $relations = [];
-
-    /**
-     ** Filter name
-     *
-     * @param $search
-     * @return QueryBuilder
-     */
-    public function name($search)
-    {
-        return $this->where('name', 'LIKE', '%' . $search . '%');
-    }
 }

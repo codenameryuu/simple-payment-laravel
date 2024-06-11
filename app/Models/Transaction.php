@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -11,11 +10,11 @@ use EloquentFilter\Filterable;
 
 use App\Helpers\HashHelper;
 
-use App\ModelFilters\ProductCategoryFilter;
+use App\ModelFilters\TransactionFilter;
 
 use App\Traits\PaginateData;
 
-class ProductCategory extends Model
+class Transaction extends Model
 {
     use Filterable, HasFactory, PaginateData, SoftDeletes;
 
@@ -47,7 +46,9 @@ class ProductCategory extends Model
      *
      * @var array
      */
-    protected $with = [];
+    protected $with = [
+        'user',
+    ];
 
     /*
     |-----------------------------------------------------------------------------
@@ -63,7 +64,7 @@ class ProductCategory extends Model
      */
     public function modelFilter()
     {
-        return $this->provideFilter(ProductCategoryFilter::class);
+        return $this->provideFilter(TransactionFilter::class);
     }
 
     /**
@@ -90,36 +91,6 @@ class ProductCategory extends Model
     | // ! write your static method(s) below, to maintain code readability
     */
 
-    /**
-     ** Scope a query to load relationship
-     * 
-     * @param QueryBuilder $query
-     * @return QueryBuilder
-     */
-    public function scopeLoadRelationship(QueryBuilder $query)
-    {
-        return $query->with([
-            'product',
-        ]);
-    }
-
-    /**
-     ** Scope a query to search
-     * 
-     * @param QueryBuilder $query
-     * @param $search
-     * @return QueryBuilder
-     */
-    public function scopeSearch(QueryBuilder $query, $search)
-    {
-        if ($search) {
-            return $query->where(function (QueryBuilder $query) use ($search) {
-                $query->where('name', 'like', '%' . $search . '%')
-                    ->orWhere('description', 'like', '%' . $search . '%');
-            });
-        }
-    }
-
     /*
     |-----------------------------------------------------------------------------
     | RELATIONAL METHOD(s)
@@ -128,12 +99,13 @@ class ProductCategory extends Model
     */
 
     /**
-     ** Relationship with product.
+     ** Relationship with user.
      *
      * @return relationship
      */
-    public function product()
+    public function user()
     {
-        return $this->hasMany(Product::class, 'product_category_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id')
+            ->withTrashed();
     }
 }

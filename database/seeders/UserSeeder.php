@@ -17,11 +17,14 @@ class UserSeeder extends Seeder
     {
         $faker = Factory::create('id_ID');
 
-        $data = [
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('admin'),
-        ];
+        for ($i = 1; $i <= 1000; $i++) {
+            $data = [
+                'email' => 'akunuser' . $i . '@gmail.com',
+                'password' => Hash::make('akunuser' . $i),
+                'name' => 'Akun User ' . $i,
+            ];
 
-        User::create($data);
+            User::create($data);
+        }
     }
 }
