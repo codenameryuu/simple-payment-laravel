@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
 
+use App\Helpers\HashHelper;
+
 use App\Validations\Api\PaymentApiValidation;
 use App\Services\Api\PaymentApiService;
 
@@ -63,7 +65,7 @@ class PaymentApiController extends Controller
      */
     public function historyTransaction(Request $request)
     {
-        $request['user_id'] = $request->user_id;
+        $request['user_id'] = HashHelper::decrypt($request->user_id);
         $validation = $this->paymentApiValidation->historyTransaction($request);
 
         if (!$validation->status) {
@@ -83,6 +85,7 @@ class PaymentApiController extends Controller
      */
     public function createTransaction(Request $request)
     {
+        $request['user_id'] = HashHelper::decrypt($request->user_id);
         $validation = $this->paymentApiValidation->createTransaction($request);
 
         if (!$validation->status) {
@@ -102,7 +105,7 @@ class PaymentApiController extends Controller
      */
     public function updateTransaction(Request $request)
     {
-        $request['transaction_id'] = $request->transaction_id;
+        $request['transaction_id'] = HashHelper::decrypt($request->transaction_id);
         $validation = $this->paymentApiValidation->updateTransaction($request);
 
         if (!$validation->status) {

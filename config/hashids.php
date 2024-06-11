@@ -38,7 +38,7 @@ return [
     'connections' => [
         'main' => [
             'salt' => 'salt-id',
-            'length' => 20,
+            'length' => 30,
             'alphabet' => 'abcdefghijklmnopqrstuvwxyz1234567890'
         ],
     ],

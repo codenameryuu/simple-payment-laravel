@@ -33,12 +33,23 @@ class Transaction extends Model
     protected $guarded = ['id'];
 
     /**
+     ** The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'id',
+        'user_id',
+    ];
+
+    /**
      ** The accessors to append to the model's array form.
      *
      * @var array
      */
     protected $appends = [
         'hash_id',
+        'user_hash_id',
     ];
 
     /**
@@ -75,6 +86,16 @@ class Transaction extends Model
     public function getHashIdAttribute()
     {
         return HashHelper::encrypt($this->id);
+    }
+
+    /**
+     ** Get the user hash id.
+     *
+     * @return string
+     */
+    public function getUserHashIdAttribute()
+    {
+        return HashHelper::encrypt($this->user_id);
     }
 
     /*

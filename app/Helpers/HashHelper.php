@@ -25,6 +25,12 @@ class HashHelper
      */
     public static function decrypt($id)
     {
-        return Hashids::connection('main')->decode($id)[0];
+        $result =  Hashids::connection('main')->decode($id);
+
+        if (empty($result)) {
+            return 0;
+        }
+
+        return $result[0];
     }
 }
