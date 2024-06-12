@@ -24,7 +24,7 @@ class TransactionSeeder extends Seeder
         for ($i = 1; $i <= 10000; $i++) {
             $data = [
                 'user_id' => $faker->randomElement($user),
-                'amount' => $faker->randomNumber(5, true),
+                'amount' => $faker->randomFloat(2, 100000, 999999),
                 'status' => $faker->randomElement(ConstantHelper::transactionStatus()),
             ];
 

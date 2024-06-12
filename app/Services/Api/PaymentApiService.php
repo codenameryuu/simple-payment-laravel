@@ -25,8 +25,12 @@ class PaymentApiService
 
         $totalTransactions = Transaction::sum('amount');
         $averageAmount = Transaction::avg('amount');
-        $highestTransaction = Transaction::max('amount');
-        $lowestTransaction = Transaction::min('amount');
+
+        $highestTransaction = Transaction::orderBy('amount', 'desc')
+            ->first();
+
+        $lowestTransaction = Transaction::orderBy('amount', 'asc')
+            ->first();
 
         $longestNameTransaction = Transaction::all()
             ->sortByDesc('user.name')

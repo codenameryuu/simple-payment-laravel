@@ -17,6 +17,14 @@ class UserSeeder extends Seeder
     {
         $faker = Factory::create('id_ID');
 
+        $data = [
+            'email' => 'fikrisabriansyah@gmail.com',
+            'password' => Hash::make('fikrisabriansyah'),
+            'name' => 'Fikri Sabriansyah',
+        ];
+
+        User::create($data);
+
         for ($i = 1; $i <= 1000; $i++) {
             $firstName = $faker->firstName();
             $lastName = $faker->lastName();
