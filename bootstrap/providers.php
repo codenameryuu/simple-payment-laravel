@@ -19,6 +19,7 @@ return [
     App\Providers\StorageHelperServiceProvider::class,
 
     // * Package Service Providers
+    App\Providers\HorizonServiceProvider::class,
     Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
     EloquentFilter\ServiceProvider::class,
     Maatwebsite\Excel\ExcelServiceProvider::class,

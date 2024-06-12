@@ -1,4 +1,4 @@
-# Simple Payment Laravel Documentation
+# Simple Payment Documentation
 
 ## Overview
 This document outlines the setup and structure of simple payment. This apps are using :
