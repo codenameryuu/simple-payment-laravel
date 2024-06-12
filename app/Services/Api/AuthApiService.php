@@ -32,8 +32,7 @@ class AuthApiService
         $user = User::create($data);
 
         $data = User::firstWhere('id', $user->id);
-        $passportToken = $data->createToken('passportToken')->accessToken;
-        $token = $passportToken->token;
+        $token = $data->createToken('passportToken')->accessToken;
 
         $result = (object) [
             'status' => $status,
@@ -57,7 +56,6 @@ class AuthApiService
         $message = MessageHelper::loginSuccess();
 
         $data = User::firstWhere('email', $request->email);
-
         $token = $data->createToken('passportToken')->accessToken;
 
         $result = (object) [
